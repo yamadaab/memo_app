@@ -1,12 +1,34 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <Memo></Memo>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import Memo from './components/Memo.vue'
+
+export default {
+  data(){
+    return {
+      name: "kiyokiyo",
+    }
+  },
+  methods:{
+    add1(count){
+      this.count1 = count;
+
+    }
+  },
+
+  components: {
+    Memo
+  }
+}
+</script>
+
 
 <style>
 #app {
