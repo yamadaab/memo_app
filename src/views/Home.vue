@@ -7,12 +7,10 @@
 
 <script>
 // @ is an alias to /src
-import Memo from '@/components/Memo.vue'
+
 
 export default {
   name: 'Home',
-  components: {
-    Memo
-  }
+
 }
 </script>

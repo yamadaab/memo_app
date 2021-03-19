@@ -1,7 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Memo></Memo>
+      <Memo :memos='memos'></Memo>
+      <div v-for="(item, index) in memos" :key='index'>
+        <label>
+          <div>{{ item.title }}</div>
+        </label>
+          <button type="button" class="btn btn-secondary btn-sm" v-on:click="deleteMemo(item.id)">削除</button>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -13,13 +19,23 @@ import Memo from './components/Memo.vue'
 export default {
   data(){
     return {
-      name: "kiyokiyo",
+      memos: [
+        {title: "111", content: "メモ１", id: 1},
+        {title: "222", content: "メモ２", id: 2},
+        {title: "333", content: "メモ３", id: 3}
+      ],
+      memo: ""
     }
   },
   methods:{
-    add1(count){
-      this.count1 = count;
+    addMemo(){
 
+    },
+    deleteMemo(deleteId){
+      this.memos = this.memos.filter(function (item) {
+        return item.id != deleteId
+      })
+      // this.saveTodo()
     }
   },
 

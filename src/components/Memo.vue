@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>Hello</p>
+    <p>{{this.memos}}</p>
   </div>
 </template>
 
@@ -8,7 +9,8 @@
 export default {
   name: 'HelloWorld',
   props: {
-  }
+      memos: Object
+    },
 }
 </script>
 
