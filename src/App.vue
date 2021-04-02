@@ -69,6 +69,7 @@ export default {
         return item.id != deleteId
       })
       this.saveMemo()
+      this.isShow = false
     },
 
     exchangeTextToArray(content){
