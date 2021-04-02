@@ -1,70 +1,114 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <Memo :memos='memos'></Memo>
+    <div id="memo" class="memo">
+      <h1>メモアプリ</h1>
+      <p><button type="button" v-on:click="addMemo()">新規作成</button></p>
       <div v-for="(item, index) in memos" :key='index'>
-        <label>
-          <div>{{ item.title }}</div>
-        </label>
+        <p>
+          <a v-on:click="isShow=true, content=item.content, id=item.id" >{{ item.title }}</a>
           <button type="button" class="btn btn-secondary btn-sm" v-on:click="deleteMemo(item.id)">削除</button>
+        </p>
       </div>
     </div>
-    <router-view/>
+
+      <div id="show" class="memo" >
+        <Show v-if="isShow" :contentPro='content' :idPro='id' @edit="editMemo"></Show>
+      </div>
   </div>
 </template>
 
 <script>
-import Memo from './components/Memo.vue'
+import Show from './components/Show.vue'
 
 export default {
   data(){
     return {
-      memos: [
-        {title: "111", content: "メモ１", id: 1},
-        {title: "222", content: "メモ２", id: 2},
-        {title: "333", content: "メモ３", id: 3}
-      ],
-      memo: ""
+      memos: [],
+      content: "",
+      id: 0,
+      isShow: false
     }
   },
   methods:{
     addMemo(){
-
+      this.id = this.countId()
+      this.memos.push({
+        title: '',
+        content: '',
+        id: this.id
+      })
+      this.saveMemo()
+      this.isShow = true
     },
+
+    editMemo(editedContent,editedMemosId){
+      const memo = this.memos.find(memo => memo.id == editedMemosId)
+      const firstLine = editedContent.indexOf("\n")
+      memo.title = editedContent.substring(0, firstLine)
+      memo.content = editedContent
+      this.content = ''
+      this.saveMemo()
+      this.isShow = false
+    },
+
+    saveMemo(){
+    localStorage.setItem('memos', JSON.stringify(this.memos))
+    },
+
+    countId(){
+      const ids = this.memos.map(function(o){return o.id})
+      if(!ids.length) {return 1}
+      else{return Math.max.apply(null,ids) +1}
+    },
+
     deleteMemo(deleteId){
       this.memos = this.memos.filter(function (item) {
         return item.id != deleteId
       })
-      // this.saveTodo()
+      this.saveMemo()
+    },
+
+    exchangeTextToArray(content){
+      return content.split('\n')
+    },
+
+    loadMemo(){
+      this.memos = JSON.parse(localStorage.getItem('memos'))
+      if(!this.memos){ 
+        this.memos = []
+      }
     }
+  },
+  mounted(){
+    this.loadMemo()
   },
 
   components: {
-    Memo
+    Show
   }
 }
 </script>
 
 
 <style>
+
 #app {
+  display: flex;
+}
+
+#memo {
+  width: 50%;
+  text-align:right;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  padding: 30px;
   color: #2c3e50;
 }
 
-#nav {
+#show {
+  text-align:center;
   padding: 30px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
