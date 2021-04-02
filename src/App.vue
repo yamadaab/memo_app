@@ -31,6 +31,7 @@ export default {
   },
   methods:{
     addMemo(){
+      this.content = ""
       this.id = this.countId()
       this.memos.push({
         title: '',
