@@ -12,7 +12,7 @@
     </div>
 
       <div id="show" class="memo" >
-        <Show v-if="isShow" :contentsBeforeEditing='content' :idPro='id' @edit="editMemo"></Show>
+        <Show v-if="isShow" :contentBeforeEditing='content' :EditingMemosId='id' @edit="editMemo"></Show>
       </div>
   </div>
 </template>
@@ -42,8 +42,8 @@ export default {
       this.isShow = true
     },
 
-    editMemo(editedContent,editedMemosId){
-      const memo = this.memos.find(memo => memo.id == editedMemosId)
+    editMemo(editedContent,editingMemosId){
+      const memo = this.memos.find(memo => memo.id == editingMemosId)
       let firstLine = editedContent.indexOf("\n")
       if (firstLine == -1) firstLine = editedContent.length
       memo.title = editedContent.substring(0, firstLine)

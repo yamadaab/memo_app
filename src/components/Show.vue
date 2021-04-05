@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>メモの詳細</h1>
-    <p><textarea class="textarea" v-bind:value="editedContent=contentsBeforeEditing" v-on:input="editedContent=$event.target.value" placeholder="内容を入力して下さい" ></textarea></p>
+    <p><textarea class="textarea" v-bind:value="editedContent=contentBeforeEditing" v-on:input="editedContent=$event.target.value" placeholder="内容を入力して下さい" ></textarea></p>
     <p><button type="button" v-on:click="editMemo()">保存・更新</button></p>
   </div>
 </template>
@@ -9,8 +9,8 @@
 <script>
 export default {
   props: {
-    contentsBeforeEditing: String,
-    idPro: Number,
+    contentBeforeEditing: String,
+    EditingMemosId: Number,
   },
   data(){
     return {
@@ -19,7 +19,7 @@ export default {
   },
   methods:{
     editMemo(){
-      this.$emit("edit", this.editedContent, this.idPro);
+      this.$emit("edit", this.editedContent, this.EditingMemosId);
     }
   }
 }
