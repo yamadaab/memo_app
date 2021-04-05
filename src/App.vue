@@ -46,7 +46,6 @@ export default {
       const memo = this.memos.find(memo => memo.id == editedMemosId)
       let firstLine = editedContent.indexOf("\n")
       if (firstLine == -1) firstLine = editedContent.length
-      console.log(firstLine)
       memo.title = editedContent.substring(0, firstLine)
       memo.content = editedContent
       this.content = ''
@@ -55,7 +54,7 @@ export default {
     },
 
     saveMemo(){
-    localStorage.setItem('memos', JSON.stringify(this.memos))
+      localStorage.setItem('memos', JSON.stringify(this.memos))
     },
 
     countId(){
